@@ -34,7 +34,7 @@ class User < ApplicationRecord
       user: self,
       send_due_date_reminder_email: true,
       due_date_reminder_email_interval: 0,
-      due_date_reminder_email_time: ActiveSupport::TimeZone[time_zone].parse('9:00:00')
+      due_date_reminder_email_time: '09:00'
     )
   end
 end

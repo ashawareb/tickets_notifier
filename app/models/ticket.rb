@@ -33,6 +33,8 @@ class Ticket < ApplicationRecord
   validates :title, :description, :user, presence: true
   validate :due_date_availability
 
+  after_commit :schedule_reminder_email # if -> { user&.email_setting.send_due_date_reminder_email }
+
 
   private
 
@@ -40,5 +42,11 @@ class Ticket < ApplicationRecord
     if due_date < Date.today
       errors.add(:due_date, 'Ticket Due Date cannot be in the past')
     end
+  end
+
+  def schedule_reminder_email
+    return unless user.email_setting&.send_due_date_reminder_email
+
+    Notification::Email::SendTicketDueToReminderEmail.new(self).call
   end
 end
