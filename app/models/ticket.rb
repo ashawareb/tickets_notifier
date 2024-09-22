@@ -33,8 +33,7 @@ class Ticket < ApplicationRecord
   validates :title, :description, :user, presence: true
   validate :due_date_availability
 
-  after_commit :schedule_reminder_email # if -> { user&.email_setting.send_due_date_reminder_email }
-
+  after_save :schedule_reminder_email, if: :saved_change_to_due_date?
 
   private
 
@@ -48,5 +47,6 @@ class Ticket < ApplicationRecord
     return unless user.email_setting&.send_due_date_reminder_email
 
     Notification::Email::SendTicketDueToReminderEmail.new(self).call
+    update_column(:reminder_status, 'scheduled')
   end
 end
