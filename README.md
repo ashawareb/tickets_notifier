@@ -24,7 +24,7 @@
 
 
 ### To run specs:
-`bundel exec espec spec`
+`bundel exec rspec spec`
 
 ### Used Gems:
 - Annotate
