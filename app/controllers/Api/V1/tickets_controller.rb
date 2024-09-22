@@ -1,6 +1,7 @@
 module Api
   module V1
     class TicketsController < ApplicationController
+      skip_before_action :verify_authenticity_token
       before_action :find_user, only: %i[create]
 
       def index

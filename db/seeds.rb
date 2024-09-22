@@ -1,9 +1,17 @@
-# This file should ensure the existence of records required to run the application in every environment (production,
-# development, test). The code here should be idempotent so that it can be executed at any point in every environment.
-# The data can then be loaded with the bin/rails db:seed command (or created alongside the database with db:setup).
-#
-# Example:
-#
-#   ["Action", "Comedy", "Drama", "Horror"].each do |genre_name|
-#     MovieGenre.find_or_create_by!(name: genre_name)
-#   end
+# db/seeds.rb
+
+# Create some users
+users = User.create!([
+                       { name: "John Doe", email: "john@example.com", time_zone: "Europe/Vienna" },
+                       { name: "Jane Smith", email: "jane@example.com", time_zone: "America/New_York" },
+                       { name: "Alice Johnson", email: "alice@example.com", time_zone: "Asia/Tokyo" }
+                     ])
+
+# Create some tickets for the users
+Ticket.create!([
+                 { title: "Fix bug in production", description: "Critical bug affecting all users", due_date: Date.today + 5, status: :to_do, user: users[0] },
+                 { title: "Prepare release notes", description: "Release notes for version 2.0", due_date: Date.today + 7, status: :in_progress, user: users[1] },
+                 { title: "Update documentation", description: "Add new features to the documentation", due_date: Date.today + 10, status: :done, user: users[2] }
+               ])
+
+puts "Seed data created!"
