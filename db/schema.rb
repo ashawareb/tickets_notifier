@@ -27,6 +27,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_09_21_112711) do
     t.text "description"
     t.integer "status", default: 1
     t.integer "reminder_status", default: 1
+    t.string "job_id"
     t.date "due_date"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false

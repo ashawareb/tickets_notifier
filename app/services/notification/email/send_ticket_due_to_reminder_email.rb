@@ -12,7 +12,8 @@ module Notification
 
       def call
         notification_datetime = send_datetime
-        TicketDueToEmailReminderJob.perform_at(notification_datetime, @ticket.id)
+        job_id = TicketDueToEmailReminderJob.perform_at(notification_datetime, @ticket.id)
+        @ticket.update_column(:job_id, job_id)
       end
 
       #private

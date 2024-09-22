@@ -10,6 +10,7 @@
 #  title           :string
 #  created_at      :datetime         not null
 #  updated_at      :datetime         not null
+#  job_id          :string
 #  user_id         :integer
 #
 # Indexes
@@ -34,6 +35,7 @@ class Ticket < ApplicationRecord
   validate :due_date_availability
 
   after_save :schedule_reminder_email, if: :saved_change_to_due_date?
+  before_destroy :cancel_reminder_email
 
   private
 
@@ -48,5 +50,12 @@ class Ticket < ApplicationRecord
 
     Notification::Email::SendTicketDueToReminderEmail.new(self).call
     update_column(:reminder_status, 'scheduled')
+  end
+
+  def cancel_reminder_email
+    return unless job_id
+    Sidekiq::ScheduledSet.new.find_job(job_id)&.delete
+    update_column(:job_id, nil)
+
   end
 end

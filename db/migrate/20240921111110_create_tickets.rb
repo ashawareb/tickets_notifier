@@ -6,6 +6,7 @@ class CreateTickets < ActiveRecord::Migration[7.1]
       t.text :description
       t.integer :status, default: 1
       t.integer :reminder_status, default: 1
+      t.string :job_id
       t.date :due_date
       t.timestamps
     end

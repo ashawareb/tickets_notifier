@@ -12,8 +12,9 @@ Rails.application.routes.draw do
   mount Sidekiq::Web => '/sidekiq'
   namespace :api, defaults: { format: 'json' } do
     namespace :v1 do
-      resources :users, only: %i[index create]
+      resources :users, only: %i[index create show]
       resources :tickets, only: %i[index create]
+      resources :email_settings, only: %i[update]
     end
   end
 end
