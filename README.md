@@ -1,24 +1,33 @@
 # README
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+- #### Ruby version: 3.0.2
+- #### Rails version: 7.1.4
+- #### Database: SQLite 1.4
 
-Things you may want to cover:
+### To run the project
+- *Clone the Repositery*
+`git clone https://github.com/ashawareb/tickets_notifier.git`
 
-* Ruby version
+- Run 
+`bundle install`
+`redis-server`
+`bundle exec sidekiq`
+`rails db:migrate`
+`rails db:seed`
+`rails s`
 
-* System dependencies
+### API endpoints
+###### `[GET] /api/v1/users` to list all users
+###### `[POST] /api/v1/users` to create new user
+###### `[GET] /api/v1/tickets` to list all tickets
+###### `[POST] /api/v1/tickets` to create new tickets
 
-* Configuration
 
-* Database creation
+### To run specs:
+`bundel exec espec spec`
 
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+### Used Gems:
+- Annotate
+- Rspec
+- Sidekiq
+- Active Model Serializer
