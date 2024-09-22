@@ -16,4 +16,6 @@
 #
 class EmailSetting < ApplicationRecord
   belongs_to :user
+
+  validates :due_date_reminder_email_interval, :due_date_reminder_email_time, presence: true
 end
